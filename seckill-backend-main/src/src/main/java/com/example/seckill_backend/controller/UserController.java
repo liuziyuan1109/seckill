@@ -4,7 +4,6 @@ import com.example.seckill_backend.model.Response;
 import com.example.seckill_backend.model.User;
 import com.example.seckill_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
