@@ -1,0 +1,13 @@
+server:
+  port: 28080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/seckill?serverTimezone=UTC&characterEncoding=utf8
+    username: root
+    password: rootpassword
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.seckill_backend.model
