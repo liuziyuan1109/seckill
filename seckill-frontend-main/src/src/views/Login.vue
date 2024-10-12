@@ -30,13 +30,13 @@ export default {
     async handleLogin() {
       try {
         const response = await login(this.username, this.password);
-        if (response.data === 0) {
+        if (response.code === 0) {
         alert("登录成功！");
         // 保存用户信息，跳转到首页
         localStorage.setItem("user", JSON.stringify(response.data));
         this.$router.push("/");
         } else {
-          alert("登录失败：用户名或密码错误");
+          alert("登录失败：" + response.message);
         }
       } catch (error) {
         alert("登录失败：" + error.message);

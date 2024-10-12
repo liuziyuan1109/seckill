@@ -30,14 +30,14 @@ export default {
     async handleRegister() {
       try {
         const response = await register(this.username, this.password);
-        if (response.status === 200) {
+        if (response.code === 0) {
           alert("注册成功！");
           this.$router.push("/login");
         } else {
           alert("注册失败：" + response.message);
         }
       } catch (error) {
-        alert("注册失败：" + error.response.data.message);
+        alert("注册失败：" + error.message);
       }
     },
   },
