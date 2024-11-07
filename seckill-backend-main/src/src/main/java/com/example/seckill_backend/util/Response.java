@@ -1,4 +1,4 @@
-package com.example.seckill_backend.model;
+package com.example.seckill_backend.util;
 
 import lombok.Data;
 import lombok.AllArgsConstructor;

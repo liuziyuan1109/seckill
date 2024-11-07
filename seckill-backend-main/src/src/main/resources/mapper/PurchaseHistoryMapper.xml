@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.seckill_backend.mapper.PurchaseHistoryMapper">
+
+    <resultMap id="PurchaseHistoryResultMap" type="com.example.seckill_backend.model.PurchaseHistory">
+        <id property="item_id" column="id"/>
+        <result property="item_name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="price" column="price"/>
+        <result property="purchase_date" column="purchase_date"/>
+    </resultMap>
+
+    <select id="getPurchaseHistoryByUserId" resultMap="PurchaseHistoryResultMap">
+        SELECT items.id, items.name, items.description, items.price, purchase_history.purchase_date
+        FROM items
+        JOIN purchase_history ON items.id = purchase_history.item_id
+        WHERE purchase_history.user_id = #{user_id}
+    </select>
+
+</mapper>

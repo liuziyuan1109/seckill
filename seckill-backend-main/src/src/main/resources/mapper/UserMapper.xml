@@ -9,6 +9,7 @@
         <id property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
+        <result property="role_id" column="role_id"/>
     </resultMap>
 
     <select id="getUserById" resultMap="UserResultMap">
