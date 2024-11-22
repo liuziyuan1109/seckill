@@ -19,6 +19,8 @@
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "sass": "^1.80.6",
+    "sass-loader": "^16.0.3",
     "vue-template-compiler": "^2.6.14"
   }
 }

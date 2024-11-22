@@ -9,7 +9,7 @@ export async function register(username, password) {
     username,
     password,
   });
-  return res.data;
+  return res;
 }
 
 export async function login(username, password) {
@@ -17,15 +17,15 @@ export async function login(username, password) {
     username,
     password,
   });
-  return res.data;
+  return res;
 }
 
 export async function getPurchaseHistory() {
   const res = await axios.get(`${API_BASE_URL}/users/purchase-history`);
-  return res.data;
+  return res;
 }
 
 export async function getFavorites() {
   const res = await axios.get(`${API_BASE_URL}/users/favorites`);
-  return res.data;
+  return res;
 }

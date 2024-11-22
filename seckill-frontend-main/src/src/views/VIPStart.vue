@@ -30,10 +30,9 @@
               if (response.data.role_id != 3) {
                 this.$router.push('/start');
               }
-            }
-            
+            }  
         } catch (error) {
-            console.error('Error fetching purchase history:', error);
+            console.error('获取用户失败：', error);
         }
     },
     methods: {

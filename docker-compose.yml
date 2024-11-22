@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-container-app
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: seckill
+    ports:
+      - "3306:3306"
+    volumes:
+      - sql_mysql_data:/var/lib/mysql
+    networks:
+      - my_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin-container-app
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    ports:
+      - "8079:80"
+    networks:
+      - my_network
+
+  backend:
+    image: backend:latest
+    container_name: backend-app
+    networks:
+      - my_network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container-app:3306/seckill?serverTimezone=UTC&characterEncoding=utf8
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+    ports:
+      - "28080:28080"
+
+  frontend:
+    image: frontend:latest
+    container_name: frontend-app
+    networks:
+      - my_network
+    environment:
+      VUE_APP_BACKEND_URL: http://localhost:28080
+    ports:
+      - "8080:80"
+
+volumes:
+  sql_mysql_data:
+    external: true # 表示使用已有卷，而不是新建
+
+networks:
+  my_network:
+    external: true  # 表示使用已有的网络，而不是新建

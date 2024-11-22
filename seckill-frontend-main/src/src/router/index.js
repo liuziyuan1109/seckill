@@ -7,6 +7,7 @@ import VIPStart from "@/views/VIPStart.vue"
 import Login from "@/views/Login.vue";
 import PurchaseHistory from '@/views/PurchaseHistory.vue';
 import Favorites from '@/views/Favorites.vue';
+import Layout from '@/layout';
 
 
 Vue.use(VueRouter)
@@ -46,6 +47,25 @@ const routes = [
     path: "/favorites",
     name: "Favorites",
     component: Favorites,
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: Layout, // 修改为 Layout 组件
+    children: [
+      {
+        path: '',
+        component: () => import( '../views/Admin.vue')
+      },
+      {
+        path: 'user/list',
+        component:() => import( '../views/User/List.vue')
+      },
+      {
+        path: 'user/add',
+        component:() => import( '../views/User/Add.vue')
+      }
+    ]
   },
 ]
 
