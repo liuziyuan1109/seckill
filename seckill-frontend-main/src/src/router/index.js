@@ -7,6 +7,8 @@ import VIPStart from "@/views/VIPStart.vue"
 import Login from "@/views/Login.vue";
 import PurchaseHistory from '@/views/PurchaseHistory.vue';
 import Favorites from '@/views/Favorites.vue';
+import ProductList from '@/views/ProductList.vue';
+import ProductDetail from '@/views/ProductDetail.vue';
 import Layout from '@/layout';
 
 
@@ -27,6 +29,16 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: '/products',
+    name: 'ProductList',
+    component: ProductList
+  },
+  {
+    path: '/product/:id',
+    name: 'ProductDetail',
+    component: ProductDetail
   },
   {
     path: "/start",

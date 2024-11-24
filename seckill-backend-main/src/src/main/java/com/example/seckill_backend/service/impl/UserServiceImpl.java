@@ -6,8 +6,6 @@ import com.example.seckill_backend.service.UserService;
 import com.example.seckill_backend.util.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -16,8 +14,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
     public User register(User user) {
@@ -43,10 +39,32 @@ public class UserServiceImpl implements UserService {
         // 设置注册日期
         user.setRegisterDate(new Date());
 
-        logger.info("用户注册：{}", user.getUsername());
-
         // 保存用户
         return userRepository.save(user);
     }
+
+    @Override
+    public User login(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new RuntimeException("用户不存在");
+        }
+        // 验证密码
+        String encryptedPassword = PasswordUtil.encryptPassword(password, user.getSalt());
+        if (!PasswordUtil.verifyPassword(password, user.getSalt(), encryptedPassword)) {
+            throw new RuntimeException("密码错误");
+        }
+        // 更新最后登录时间和登录次数
+        user.setLastLoginDate(new Date());
+        user.setLoginCount(user.getLoginCount() + 1);
+        userRepository.save(user);
+        return user;
+    }
+
+    public User findById(Long id){
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+    }
+
 }
 

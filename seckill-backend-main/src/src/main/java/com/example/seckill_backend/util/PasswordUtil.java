@@ -30,5 +30,10 @@ public class PasswordUtil {
         String saltedPassword = password + salt;
         return encoder.encode(saltedPassword);
     }
+
+    // 验证密码
+    public static boolean verifyPassword(String rawPassword, String salt, String hashedPassword) {
+        return encoder.matches(rawPassword + salt, hashedPassword);
+    }
 }
 

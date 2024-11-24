@@ -32,7 +32,7 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastLoginDate;
 
-    private Integer loginCount;
+    private Integer loginCount = 0;
 
     // Getter and Setter methods
 }

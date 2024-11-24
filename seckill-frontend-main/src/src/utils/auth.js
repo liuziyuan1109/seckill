@@ -1,16 +1,16 @@
-const AccessTokenKey = 'ACCESS_TOKEN'
+const TOKEN = 'token'
 
 // 获取 Token
-export function getAccessToken() {
-  return localStorage.getItem(AccessTokenKey)
+export function getToken() {
+  return localStorage.getItem(TOKEN)
 }
 
 // 设置 Token
 export function setToken(token) {
-  localStorage.setItem(AccessTokenKey, token)
+  localStorage.setItem(TOKEN, token)
 }
 
 // 删除 Token
 export function removeToken() {
-  localStorage.removeItem(AccessTokenKey)
+  localStorage.removeItem(TOKEN)
 }

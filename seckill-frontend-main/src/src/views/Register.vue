@@ -107,8 +107,8 @@ export default {
       const encrypt = new JSEncrypt();
       // 后端提供的公钥，需要在组件中获取或在请求时动态获取
       this.$axios.get(`${API_BASE_URL}/api/key`)
-        .then(respose => {
-          const pemFormattedPublicKey = `-----BEGIN PUBLIC KEY-----\n${respose.data.match(/.{1,64}/g).join('\n')}\n-----END PUBLIC KEY-----`;
+        .then(response => {
+          const pemFormattedPublicKey = `-----BEGIN PUBLIC KEY-----\n${response.data.match(/.{1,64}/g).join('\n')}\n-----END PUBLIC KEY-----`;
           encrypt.setPublicKey(pemFormattedPublicKey)
           const encryptedPassword = encrypt.encrypt(this.form.password);
 
@@ -122,8 +122,8 @@ export default {
           // 发送请求
           return this.$axios.post(`${API_BASE_URL}/api/register`, submitData)
         })
-        .then(respose => {
-          alert("注册成功！");
+        .then(response => {
+          this.$message.success("注册成功！");
           this.$router.push('/login');
         })
         .catch(error => {

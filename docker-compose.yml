@@ -32,7 +32,7 @@ services:
     networks:
       - my_network
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container-app:3306/seckill?serverTimezone=UTC&characterEncoding=utf8
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container-app:3306/personal_seckill?serverTimezone=UTC&characterEncoding=utf8
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: rootpassword
     ports:
