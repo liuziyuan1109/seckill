@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   mysql:
-    image: mysql:latest
+    image: swr.cn-north-4.myhuaweicloud.com/liuziyuan/my-mysql-auto-tables:latest
     container_name: mysql-container-app
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
@@ -10,7 +10,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - sql_mysql_data:/var/lib/mysql
+      - db_data:/var/lib/mysql
     networks:
       - my_network
 
@@ -27,7 +27,7 @@ services:
       - my_network
 
   backend:
-    image: backend:latest
+    image: swr.cn-north-4.myhuaweicloud.com/liuziyuan/backend:latest
     container_name: backend-app
     networks:
       - my_network
@@ -39,7 +39,7 @@ services:
       - "28080:28080"
 
   frontend:
-    image: frontend:latest
+    image: swr.cn-north-4.myhuaweicloud.com/liuziyuan/frontend:latest
     container_name: frontend-app
     networks:
       - my_network
@@ -49,9 +49,9 @@ services:
       - "8080:80"
 
 volumes:
-  sql_mysql_data:
-    external: true # 表示使用已有卷，而不是新建
+  db_data:
+
 
 networks:
   my_network:
-    external: true  # 表示使用已有的网络，而不是新建
+
