@@ -3,31 +3,21 @@ version: '3.8'
 services:
   mysql:
     image: swr.cn-north-4.myhuaweicloud.com/liuziyuan/my-mysql-auto-tables:latest
+    pull_policy: always
     container_name: mysql-container-app
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: seckill_personal
+      MYSQL_DATABASE: personal_seckill
     ports:
       - "3306:3306"
     volumes:
-      - db_data:/var/lib/mysql
-    networks:
-      - my_network
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin-container-app
-    environment:
-      PMA_HOST: mysql
-      PMA_USER: root
-      PMA_PASSWORD: rootpassword
-    ports:
-      - "8079:80"
+      - sql_data:/var/lib/mysql
     networks:
       - my_network
 
   backend:
     image: swr.cn-north-4.myhuaweicloud.com/liuziyuan/backend:latest
+    pull_policy: always
     container_name: backend-app
     networks:
       - my_network
@@ -40,6 +30,7 @@ services:
 
   frontend:
     image: swr.cn-north-4.myhuaweicloud.com/liuziyuan/frontend:latest
+    pull_policy: always
     container_name: frontend-app
     networks:
       - my_network
@@ -49,8 +40,8 @@ services:
       - "8080:80"
 
 volumes:
-  db_data:
-
+  sql_data:
+    
 
 networks:
   my_network:

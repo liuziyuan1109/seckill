@@ -6,7 +6,7 @@ services:
     container_name: mysql-container-app
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: seckill_personal
+      MYSQL_DATABASE: personal_seckill
     ports:
       - "3306:3306"
     volumes:
