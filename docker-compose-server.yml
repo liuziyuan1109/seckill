@@ -53,8 +53,6 @@ services:
       - my_network
     ports:
       - "8080:80"
-    environment:
-      - API_BASE_URL=http://121.36.27.107:8080 # 目标后端服务地址
 
 
 networks:
