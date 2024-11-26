@@ -46,21 +46,37 @@ version: '3.8'
 
 services:
   mysql:
-    image: swr.cn-north-4.myhuaweicloud.com/liuziyuan/my-mysql-auto-tables:latest
-    pull_policy: always
+    image: mysql:latest
     container_name: mysql-container-app
+    privileged: true  # 启用扩展权限
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: personal_seckill
     ports:
       - "3306:3306"
     volumes:
-      - sql_data:/var/lib/mysql
+      - mysql:/var/lib/mysql
+    networks:
+      - my_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    depends_on:
+      - mysql
+    container_name: phpmyadmin-container-app
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    ports:
+      - "8079:80"
     networks:
       - my_network
 
   backend:
     image: swr.cn-north-4.myhuaweicloud.com/liuziyuan/backend:latest
+    depends_on:
+      - mysql
     pull_policy: always
     container_name: backend-app
     networks:
@@ -79,15 +95,16 @@ services:
     networks:
       - my_network
     environment:
-      VUE_APP_BACKEND_URL: http://localhost:28080
+      VUE_APP_BACKEND_URL: http://backend-app:28080
     ports:
       - "8080:80"
 
-volumes:
-  sql_data:
-    
+
 networks:
   my_network:
+
+volumes:
+  mysql:
 
 EOF
 
@@ -99,15 +116,10 @@ else
   exit 1
 fi
 
-docker start mysql-container-app
-docker exec -it mysql-container-app bash
-chown -R mysql:mysql /var/lib/mysql
-chmod -R 750 /var/lib/mysql
-rm -rf /var/lib/mysql/*
-
 # 4. 拉取镜像并启动容器
 docker login -u cn-north-4@4J2AKM8IYU89ZEPO4T5Y -p 7468a454c3c10b038506a939f8b910e6de66065ad7c82792161a846505bdc0de swr.cn-north-4.myhuaweicloud.com
 echo "正在拉取镜像并启动容器..."
 docker-compose -f "$DOCKER_COMPOSE_FILE_PATH" up -d
 
 echo "任务完成！所有容器已启动。"
+
