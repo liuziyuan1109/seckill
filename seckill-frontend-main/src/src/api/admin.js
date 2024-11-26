@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:28080"; // 后端服务地址
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:28080"; // 后端服务地址
 
 
 export async function getUser() {

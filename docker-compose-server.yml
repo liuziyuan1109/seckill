@@ -51,8 +51,6 @@ services:
     container_name: frontend-app
     networks:
       - my_network
-    environment:
-      VUE_APP_BACKEND_URL: http://backend-app:28080
     ports:
       - "8080:80"
 
