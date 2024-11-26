@@ -100,7 +100,7 @@ export default {
 
             this.$message.success("登录成功！");
             // 跳转到主页或用户中心
-            this.$router.push('/start');
+            this.$router.push('/products');
           } else {
             // 显示错误信息
             this.$message.error(response.data.message);
