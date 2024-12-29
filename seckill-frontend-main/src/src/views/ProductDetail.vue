@@ -28,11 +28,6 @@
                 <div class="product-stock">
                     库存：<span>{{ product.stock > 0 ? product.stock : '缺货' }}</span>
                 </div>
-                <!-- 规格选择（若有） -->
-                <!-- <div class="product-spec">
-            <span>规格：</span>
-            <!-- 规格选项 -->
-                <!-- </div> -->
                 <!-- 购买数量 -->
                 <div class="product-quantity">
                     <span>数量：</span>
@@ -83,7 +78,6 @@ export default {
                         // 处理图片列表
                         this.imageList = [this.product.img]; // 如果有多张图片，需调整此处
                         this.mainImage = this.product.img;
-                        console.log(this.mainImage)
                     } else {
                         this.$message.error(response.message);
                     }
@@ -102,9 +96,26 @@ export default {
                 this.quantity = this.product.stock;
             }
         },
-        buyNow() {
-            // 立即购买逻辑
-            this.$message.success('购买功能尚未实现');
+        async buyNow() {
+            // 调用后端下单接口
+            try {
+                const response = await this.$axios.post(`${API_BASE_URL}/api/orders`, {
+                    // userId: localStorage.getItem('userid'), // 从登录信息中动态获取
+                    productId: this.productId,
+                    quantity: this.quantity
+                });
+                
+                if (response.code === 200) {
+                    this.$message.success('下单成功！');
+                    // 可跳转到订单列表页面
+                    this.$router.push('/orderlist');
+                } else {
+                    throw new Error(response.message);
+                }
+            } catch (error) {
+                console.error(error);
+                this.$message.error(error.message || '下单失败');
+            }
         },
         addToCart() {
             // 加入购物车逻辑

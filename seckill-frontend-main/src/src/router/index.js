@@ -10,6 +10,8 @@ import Favorites from '@/views/Favorites.vue';
 import ProductList from '@/views/ProductList.vue';
 import ProductDetail from '@/views/ProductDetail.vue';
 import Layout from '@/layout';
+import Orderlist from '@/views/Orderlist.vue';
+import Seckilllist from '@/views/Seckilllist.vue';
 
 
 Vue.use(VueRouter)
@@ -59,6 +61,16 @@ const routes = [
     path: "/favorites",
     name: "Favorites",
     component: Favorites,
+  },
+  {
+    path: "/orderlist",
+    name: "Orderlist",
+    component: Orderlist,
+  },
+  {
+    path: "/seckilllist",
+    name: "Seckilllist",
+    component: Seckilllist,
   },
   {
     path: '/admin',

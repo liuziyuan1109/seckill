@@ -2,25 +2,33 @@
     <div class="product-list">
         <!-- 搜索和筛选区域 -->
         <div class="search-filter">
-            <!-- 搜索框 -->
-            <el-input placeholder="搜索商品" v-model="searchKeyword" @change="handleSearch" style="width: 300px;">
+            <el-input 
+                placeholder="搜索商品" 
+                v-model="searchKeyword" 
+                @change="handleSearch" 
+                style="width: 300px; margin-right: 20px;">
                 <i slot="prefix" class="el-icon-search"></i>
             </el-input>
-            <!-- 筛选条件 -->
-            <!-- 类别筛选 -->
-            <el-select v-model="selectedCategory" placeholder="选择类别" @change="handleFilter">
-                <el-option v-for="category in categories" :key="category.id" :label="category.name"
-                    :value="category.id"></el-option>
-            </el-select>
-            <!-- 价格区间筛选 -->
-            <el-input-number v-model="priceRange.min" @change="handleFilter" :min="0"
-                placeholder="最低价"></el-input-number>
+
+            <el-input-number 
+                v-model="priceRange.min" 
+                @change="handleFilter" 
+                :min="0" 
+                placeholder="最低价" 
+                style="margin-right: 10px;">
+            </el-input-number>
             <span>-</span>
-            <el-input-number v-model="priceRange.max" @change="handleFilter" :min="0"
-                placeholder="最高价"></el-input-number>
-            <!-- 重置筛选 -->
-            <el-button @click="resetFilter">重置筛选</el-button>
+            <el-input-number 
+                v-model="priceRange.max" 
+                @change="handleFilter" 
+                :min="0" 
+                placeholder="最高价" 
+                style="margin-left: 10px;">
+            </el-input-number>
+
+            <el-button @click="resetFilter" type="primary" style="margin-left: 20px;">重置筛选</el-button>
         </div>
+        
         <!-- 商品展示区域 -->
         <div v-if="products.length === 0">
             <p>抱歉，没有找到相关商品。</p>

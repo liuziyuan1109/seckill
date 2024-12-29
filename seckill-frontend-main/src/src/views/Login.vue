@@ -94,8 +94,10 @@ export default {
             // 保存 Token
             const token = response.data.token;
             localStorage.setItem('token', token);
+
             // 保存用户信息（可选）
             const user = response.data.user;
+            localStorage.setItem('userid', user.id);
             this.$store.commit('SET_USER', user);
 
             this.$message.success("登录成功！");
