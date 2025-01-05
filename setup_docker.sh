@@ -85,6 +85,12 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container-app:3306/personal_seckill?serverTimezone=UTC&characterEncoding=utf8
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: rootpassword
+      RABBITMQ_HOST: rabbitmq-container
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      REDIS_HOST: redis-container
+      REDIS_PORT: 6379
     ports:
       - "28080:28080"
 
@@ -100,6 +106,9 @@ services:
   redis:
     image: redis
     container_name: redis-container
+    privileged: true  # 启用扩展权限
+    networks:
+      - my_network
     ports:
       - "6379:6379"
     volumes:
@@ -108,18 +117,31 @@ services:
   rabbitmq:
     image: rabbitmq:management
     container_name: rabbitmq-container
+    privileged: true  # 启用扩展权限
+    networks:
+      - my_network
     ports:
       - "5672:5672"
       - "15672:15672"
     volumes:
       - ./rabbitmq-data:/var/lib/rabbitmq
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1G"
+        reservations:
+          memory: "512M"
+
 
 networks:
   my_network:
 
 volumes:
   mysql:
-
+  redis-data:
+  rabbitmq-data:
+ 
 EOF
 
 # 确认文件生成成功
@@ -136,4 +158,3 @@ echo "正在拉取镜像并启动容器..."
 docker-compose -f "$DOCKER_COMPOSE_FILE_PATH" up -d
 
 echo "任务完成！所有容器已启动。"
-
