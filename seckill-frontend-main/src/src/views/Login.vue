@@ -104,9 +104,9 @@ export default {
             this.$message.success("登录成功！");
 
             // 跳转到主页或用户中心
-            if (user.role === 0) {
+            if (user.role == 0) {
               this.$router.push('/products');
-            } else {
+            } else if (user.role == 1) {
               this.$router.push('/SeckillManagement');
             }
            

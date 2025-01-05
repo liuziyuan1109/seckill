@@ -75,11 +75,8 @@ export default {
       this.showForm = true;
     },
     editActivity(activity) {
-      this.selectedActivity = activity;
-      this.$nextTick(() => {
-        this.$refs.seckillForm.resetForm();
-      });
-      this.showForm = true;
+      this.selectedActivity = { ...activity }; // 将选中的活动传递给子组件
+      this.showForm = true; // 打开弹窗
     },
     confirmDeleteActivity(id) {
       this.$confirm("确认删除该活动吗？", "提示", {

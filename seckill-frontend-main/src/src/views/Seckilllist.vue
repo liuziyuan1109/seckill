@@ -18,8 +18,10 @@
             </el-input-number>
 
             <el-button @click="resetFilter" type="primary" style="margin-left: 20px;">重置筛选</el-button>
-             <!-- 普通商城按钮 -->
-             <el-button @click="goToNormalShop" type="success" style="margin-left: 20px;">普通商城</el-button>
+            <!-- 普通商城按钮 -->
+            <el-button @click="goToNormalShop" type="success" style="margin-left: 20px;">普通商城</el-button>
+            <!-- 我的订单按钮 -->
+            <el-button @click="goToMyOrders" type="info" style="margin-left: 20px;">我的订单</el-button>
         </div>
 
         <!-- 商品展示区域 -->
@@ -122,7 +124,7 @@ export default {
                 }
             } catch (error) {
                 console.error(error);
-                this.$message.error('加载秒杀商品失败');
+                // this.$message.error('加载秒杀商品失败');
             }
         },
         handleSearch() {
@@ -148,6 +150,9 @@ export default {
         },
         goToNormalShop() {
             this.$router.push('/products');
+        },
+        goToMyOrders() {
+            this.$router.push('/orderlist');
         },
         formatDate(datetime) {
             if (!datetime) return '';

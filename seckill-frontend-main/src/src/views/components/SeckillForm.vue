@@ -60,12 +60,26 @@ export default {
   },
   watch: {
     activity: {
-      immediate: true,
+      immediate: true, // 在组件加载时立即触发
       handler(newVal) {
-        this.form = { ...this.form, ...newVal };
+        if (newVal && Object.keys(newVal).length > 0) {
+          this.form = {
+            ...this.resetForm(), // 先重置表单
+            id: newVal.id,
+            name: newVal.activity_name, // 映射 activity_name 到 name
+            startTime: new Date(newVal.startDate), // 转换为 Date 对象
+            endTime: new Date(newVal.endDate), // 转换为 Date 对象
+            productId: newVal.productId,
+            price: newVal.seckillPrice,
+            stock: newVal.stockCount,
+          };
+        } else {
+          this.form = this.resetForm(); // 如果无数据，重置表单
+        }
       },
     },
   },
+
   methods: {
     resetForm() {
       this.form = {
@@ -84,49 +98,49 @@ export default {
       console.log("商品列表：", this.products);
     },
     async submit() {
-  this.$refs.form.validate((valid) => {
-    if (!valid) return;
+      this.$refs.form.validate((valid) => {
+        if (!valid) return;
 
-    console.log(this.form);
-    const payload = {
-      id: this.form.id,
-      activity_name: this.form.name,
-      goodsId: this.form.productId,
-      seckillPrice: this.form.price,
-      stockCount: this.form.stock,
-      startDate: this.form.startTime
-        ? `${this.form.startTime.getFullYear()}-${String(this.form.startTime.getMonth() + 1).padStart(2, "0")}-${String(this.form.startTime.getDate()).padStart(2, "0")}T${String(this.form.startTime.getHours()).padStart(2, "0")}:${String(this.form.startTime.getMinutes()).padStart(2, "0")}:${String(this.form.startTime.getSeconds()).padStart(2, "0")}`
-        : null,
-      endDate: this.form.endTime
-        ? `${this.form.endTime.getFullYear()}-${String(this.form.endTime.getMonth() + 1).padStart(2, "0")}-${String(this.form.endTime.getDate()).padStart(2, "0")}T${String(this.form.endTime.getHours()).padStart(2, "0")}:${String(this.form.endTime.getMinutes()).padStart(2, "0")}:${String(this.form.endTime.getSeconds()).padStart(2, "0")}`
-        : null,
-    };
+        console.log(this.form);
+        const payload = {
+          id: this.form.id,
+          activity_name: this.form.name,
+          goodsId: this.form.productId,
+          seckillPrice: this.form.price,
+          stockCount: this.form.stock,
+          startDate: this.form.startTime
+            ? `${this.form.startTime.getFullYear()}-${String(this.form.startTime.getMonth() + 1).padStart(2, "0")}-${String(this.form.startTime.getDate()).padStart(2, "0")}T${String(this.form.startTime.getHours()).padStart(2, "0")}:${String(this.form.startTime.getMinutes()).padStart(2, "0")}:${String(this.form.startTime.getSeconds()).padStart(2, "0")}`
+            : null,
+          endDate: this.form.endTime
+            ? `${this.form.endTime.getFullYear()}-${String(this.form.endTime.getMonth() + 1).padStart(2, "0")}-${String(this.form.endTime.getDate()).padStart(2, "0")}T${String(this.form.endTime.getHours()).padStart(2, "0")}:${String(this.form.endTime.getMinutes()).padStart(2, "0")}:${String(this.form.endTime.getSeconds()).padStart(2, "0")}`
+            : null,
+        };
 
-    console.log("提交的数据：", payload);
+        console.log("提交的数据：", payload);
 
-    if (this.form.id) {
-      this.$axios
-        .put(`${API_BASE_URL}/api/admin/seckill-products/${this.form.id}`, payload)
-        .then((response) => {
-          console.log("更新成功：", response.data);
-          this.$emit("submit");
-        })
-        .catch((error) => {
-          console.error("更新失败：", error);
-        });
-    } else {
-      this.$axios
-        .post(`${API_BASE_URL}/api/admin/seckill-products`, payload)
-        .then((response) => {
-          console.log("创建成功：", response);
-          this.$emit("submit");
-        })
-        .catch((error) => {
-          console.error("创建失败：", error);
-        });
+        if (this.form.id) {
+          this.$axios
+            .put(`${API_BASE_URL}/api/admin/seckill-products/${this.form.id}`, payload)
+            .then((response) => {
+              console.log("更新成功：", response.data);
+              this.$emit("submit");
+            })
+            .catch((error) => {
+              console.error("更新失败：", error);
+            });
+        } else {
+          this.$axios
+            .post(`${API_BASE_URL}/api/admin/seckill-products`, payload)
+            .then((response) => {
+              console.log("创建成功：", response);
+              this.$emit("submit");
+            })
+            .catch((error) => {
+              console.error("创建失败：", error);
+            });
+        }
+      });
     }
-  });
-}
 
   },
   created() {

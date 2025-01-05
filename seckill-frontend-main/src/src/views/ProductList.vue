@@ -2,27 +2,16 @@
     <div class="product-list">
         <!-- 搜索和筛选区域 -->
         <div class="search-filter">
-            <el-input 
-                placeholder="搜索商品" 
-                v-model="searchKeyword" 
-                @change="handleSearch" 
+            <el-input placeholder="搜索商品" v-model="searchKeyword" @change="handleSearch"
                 style="width: 300px; margin-right: 20px;">
                 <i slot="prefix" class="el-icon-search"></i>
             </el-input>
 
-            <el-input-number 
-                v-model="priceRange.min" 
-                @change="handleFilter" 
-                :min="0" 
-                placeholder="最低价" 
+            <el-input-number v-model="priceRange.min" @change="handleFilter" :min="0" placeholder="最低价"
                 style="margin-right: 10px;">
             </el-input-number>
             <span>-</span>
-            <el-input-number 
-                v-model="priceRange.max" 
-                @change="handleFilter" 
-                :min="0" 
-                placeholder="最高价" 
+            <el-input-number v-model="priceRange.max" @change="handleFilter" :min="0" placeholder="最高价"
                 style="margin-left: 10px;">
             </el-input-number>
 
@@ -30,13 +19,15 @@
 
             <!-- 秒杀专区按钮 -->
             <el-button @click="goToSeckill" type="success" style="margin-left: 20px;">秒杀专区</el-button>
+            <!-- 我的订单按钮 -->
+            <el-button @click="goToMyOrders" type="info" style="margin-left: 20px;">我的订单</el-button>
         </div>
-        
+
         <!-- 商品展示区域 -->
         <div v-if="products.length === 0">
             <p>抱歉，没有找到相关商品。</p>
         </div>
-        
+
         <el-row :gutter="20">
             <el-col :span="6" v-for="product in products" :key="product.id">
                 <el-card :body-style="{ padding: '10px' }" class="product-card">
@@ -99,7 +90,7 @@ export default {
                 })
                 .catch(error => {
                     console.error(error);
-                    this.$message.error('获取商品列表失败');
+                    // this.$message.error('获取商品列表失败');
                 });
         },
         handleSearch() {
@@ -126,7 +117,10 @@ export default {
         },
         goToSeckill() {
             this.$router.push('/seckilllist');
-        }
+        },
+        goToMyOrders() {
+            this.$router.push('/orderlist');
+        },
     }
 };
 </script>

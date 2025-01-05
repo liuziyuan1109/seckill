@@ -74,20 +74,4 @@ public class AdminController {
         checkAdminRole(request); // 验证权限
         return adminService.getAllProducts();
     }
-
-    // 从请求中获取用户ID
-    public static Long getUserIdFromRequest(HttpServletRequest request) {
-        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            throw new RuntimeException("Authorization 头缺失或格式不正确");
-        }
-        String token = authorizationHeader.substring(7);
-        return getUserIdFromToken(token);
-    }
-
-    // 模拟从Token中解析用户ID的方法（具体实现取决于你的Token机制）
-    private static Long getUserIdFromToken(String token) {
-        // 假设从Token解析用户ID，实际中需要解密和验证Token
-        return Long.parseLong(token.split("\\.")[1]); // 示例，实际实现需更安全
-    }
 }
