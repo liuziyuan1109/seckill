@@ -3,7 +3,13 @@ import { getToken } from '@/utils/auth'
 
 router.beforeEach((to, from, next) => {
   if (getToken()) { // 如果有token
-      next() // 正常跳转
+    if (to.path === '/SeckillManagement') {
+      if (localStorage.getItem('role') === 1) {
+        next()
+      } else {
+        next('/seckilllist')
+      }
+    } else next() // 正常跳转
   } else { // 没有token
     if (to.path === '/login' || to.path === '/' || to.path === '/register') {
       next() // 如果是去这几个页，正常跳转

@@ -34,5 +34,7 @@ public class User {
 
     private Integer loginCount = 0;
 
+    private Integer role; // 0是普通用户，1是管理员
+
     // Getter and Setter methods
 }

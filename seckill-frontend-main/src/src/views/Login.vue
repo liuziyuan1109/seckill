@@ -98,11 +98,18 @@ export default {
             // 保存用户信息（可选）
             const user = response.data.user;
             localStorage.setItem('userid', user.id);
+            localStorage.setItem('role', user.role);
             this.$store.commit('SET_USER', user);
 
             this.$message.success("登录成功！");
+
             // 跳转到主页或用户中心
-            this.$router.push('/products');
+            if (user.role === 0) {
+              this.$router.push('/products');
+            } else {
+              this.$router.push('/SeckillManagement');
+            }
+           
           } else {
             // 显示错误信息
             this.$message.error(response.data.message);

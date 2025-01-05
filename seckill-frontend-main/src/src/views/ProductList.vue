@@ -27,6 +27,9 @@
             </el-input-number>
 
             <el-button @click="resetFilter" type="primary" style="margin-left: 20px;">重置筛选</el-button>
+
+            <!-- 秒杀专区按钮 -->
+            <el-button @click="goToSeckill" type="success" style="margin-left: 20px;">秒杀专区</el-button>
         </div>
         
         <!-- 商品展示区域 -->
@@ -54,7 +57,7 @@
 </template>
 
 <script>
-const API_BASE_URL = process.env.VUE_APP_API_BASE_URL
+const API_BASE_URL = process.env.VUE_APP_API_BASE_URL;
 export default {
     name: 'ProductList',
     data() {
@@ -65,35 +68,18 @@ export default {
                 min: null,
                 max: 99999999
             },
-            categories: [], // 类别列表，从后端获取
-            products: [], // 商品列表
+            categories: [],
+            products: [],
             currentPage: 1,
             pageSize: 12,
             total: 0
         };
     },
     mounted() {
-        // this.fetchCategories();
         this.fetchProducts();
     },
     methods: {
-        fetchCategories() {
-            // 调用后端接口获取类别列表
-            this.$axios.get(`${API_BASE_URL}/api/categories`)
-                .then(response => {
-                    if (response.code === 200) {
-                        this.categories = response.data;
-                    } else {
-                        this.$message.error(response.message);
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                    this.$message.error('获取类别列表失败');
-                });
-        },
         fetchProducts() {
-            // 调用后端接口获取商品列表
             const params = {
                 page: this.currentPage,
                 size: this.pageSize,
@@ -137,6 +123,9 @@ export default {
         },
         goToDetail(productId) {
             this.$router.push(`/product/${productId}`);
+        },
+        goToSeckill() {
+            this.$router.push('/seckilllist');
         }
     }
 };

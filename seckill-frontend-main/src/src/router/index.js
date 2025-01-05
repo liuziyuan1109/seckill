@@ -12,6 +12,7 @@ import ProductDetail from '@/views/ProductDetail.vue';
 import Layout from '@/layout';
 import Orderlist from '@/views/Orderlist.vue';
 import Seckilllist from '@/views/Seckilllist.vue';
+import SeckillManagement from '@/views/Admin/SeckillManagement.vue';
 
 
 Vue.use(VueRouter)
@@ -71,6 +72,11 @@ const routes = [
     path: "/seckilllist",
     name: "Seckilllist",
     component: Seckilllist,
+  },
+  {
+    path: '/SeckillManagement',
+    name: 'SeckillManagement',
+    component: SeckillManagement,
   },
   {
     path: '/admin',

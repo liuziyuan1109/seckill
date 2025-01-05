@@ -97,6 +97,22 @@ services:
     ports:
       - "8080:80"
 
+  redis:
+    image: redis
+    container_name: redis-container
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq-container
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./rabbitmq-data:/var/lib/rabbitmq
 
 networks:
   my_network:

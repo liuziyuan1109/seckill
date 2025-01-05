@@ -1,6 +1,6 @@
 <template>
     <div class="seckill-list">
-        <h1>秒杀商品列表</h1>
+        <h1>秒杀专区</h1>
 
         <!-- 搜索和筛选区域 -->
         <div class="search-filter">
@@ -18,6 +18,8 @@
             </el-input-number>
 
             <el-button @click="resetFilter" type="primary" style="margin-left: 20px;">重置筛选</el-button>
+             <!-- 普通商城按钮 -->
+             <el-button @click="goToNormalShop" type="success" style="margin-left: 20px;">普通商城</el-button>
         </div>
 
         <!-- 商品展示区域 -->
@@ -144,6 +146,9 @@ export default {
         goToDetail(productId) {
             this.$router.push(`/seckill/product/${productId}`);
         },
+        goToNormalShop() {
+            this.$router.push('/products');
+        },
         formatDate(datetime) {
             if (!datetime) return '';
             const date = new Date(datetime);
@@ -223,7 +228,16 @@ export default {
             const endTime = new Date(product.endDate).getTime();
 
             if (now < startTime) {
-                return "未开始";
+                const timeDiff = startTime - now; // 距离开始的时间差（毫秒）
+
+                // 转换为天、小时、分钟、秒
+                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                // 返回格式化的时间
+                return `距开始还有 ${days}天 ${hours}小时 ${minutes}分钟 ${seconds}秒`;
             } else if (now > endTime) {
                 return "已结束";
             } else {
@@ -236,7 +250,7 @@ export default {
             const endTime = new Date(product.endDate).getTime();
 
             if (now < startTime) {
-                return "status-not-started";
+                return "product-countdown";
             } else if (now > endTime) {
                 return "status-ended";
             } else {

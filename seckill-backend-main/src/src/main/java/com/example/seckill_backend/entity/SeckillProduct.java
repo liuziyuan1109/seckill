@@ -30,6 +30,9 @@ public class SeckillProduct {
     @Column(name = "end_date")
     private LocalDateTime endDate; // 秒杀结束时间
 
+    @Column(name = "activity_name", nullable = true)
+    private String activity_name;
+
     // 添加一个商品信息字段，用于展示商品名称、原价和图片
     @Transient // 此字段不映射到数据库
     private Product product; // 商品信息
