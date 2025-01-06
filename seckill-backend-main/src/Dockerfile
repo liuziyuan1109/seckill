@@ -1,6 +1,16 @@
 # 使用官方 OpenJDK 镜像作为基础镜像
 FROM openjdk:17-jdk-alpine
 
+# 定义构建参数
+ARG REDIS_HOST=redis-container
+ARG REDIS_PORT=6379
+ARG RABBITMQ_HOST=rabbitmq-container
+
+# 设置环境变量
+ENV REDIS_HOST=${REDIS_HOST}
+ENV REDIS_PORT=${REDIS_PORT}
+ENV RABBITMQ_HOST=${RABBITMQ_HOST}
+
 # 设置工作目录
 WORKDIR /app
 
