@@ -20,5 +20,5 @@ COPY target/seckill-backend-0.0.1-SNAPSHOT.jar app.jar
 # 暴露应用端口（修改为你的 Spring Boot 应用端口）
 EXPOSE 28080
 
-# 启动应用
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# 设置容器启动时的运行命令，使用传入的环境变量
+ENTRYPOINT ["java", "-Dspring.rabbitmq.host=${RABBITMQ_HOST}", "-Dspring.redis.host=${REDIS_HOST}", "-Dspring.redis.port=${REDIS_PORT}", "-jar", "app.jar"]
