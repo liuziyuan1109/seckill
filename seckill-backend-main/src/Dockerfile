@@ -7,6 +7,8 @@ WORKDIR /app
 # 将 Spring Boot JAR 包复制到容器中
 COPY target/seckill-backend-0.0.1-SNAPSHOT.jar app.jar
 
+COPY src/main/resources/application.yml /app/application.yml
+
 # 暴露应用端口（修改为你的 Spring Boot 应用端口）
 EXPOSE 28080
 
