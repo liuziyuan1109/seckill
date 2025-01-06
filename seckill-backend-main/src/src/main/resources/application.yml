@@ -15,14 +15,14 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
 
   redis:
-    host: ${REDIS_HOST:localhost}          # Redis 主机地址
-    port: ${REDIS_PORT:6379}               # Redis 端口
+    host: redis-container         # Redis 主机地址
+    port: 6379               # Redis 端口
     password:                # 如果 Redis 没有密码，可以留空
     database: 0              # Redis 使用的数据库，默认是 0
     timeout: 5000ms          # 连接超时时间
 
   rabbitmq:
-    host: ${RABBITMQ_HOST:localhost}          # RabbitMQ 主机地址
+    host: rabbitmq-container        # RabbitMQ 主机地址
     port: 5672               # RabbitMQ 端口
     username: guest          # RabbitMQ 用户名
     password: guest          # RabbitMQ 密码
