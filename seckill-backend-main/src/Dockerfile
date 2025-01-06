@@ -13,4 +13,4 @@ COPY src/main/resources/application.yml /app/application.yml
 EXPOSE 28080
 
 # 设置容器启动时的运行命令，使用传入的环境变量
-ENTRYPOINT ["java", "-Dspring.rabbitmq.host=rabbitmq-container", "-Dspring.redis.host=redis-container", "-Dspring.redis.port=6379", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Dspring.rabbitmq.host=rabbitmq", "-Dspring.redis.host=redis", "-Dspring.redis.port=6379", "-jar", "app.jar"]
