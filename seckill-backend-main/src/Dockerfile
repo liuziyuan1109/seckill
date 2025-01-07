@@ -10,7 +10,7 @@ COPY target/seckill-backend-0.0.1-SNAPSHOT.jar app.jar
 COPY src/main/resources/application.yml /app/application.yml
 
 # 安装字体和 fontconfig
-RUN apt-get update && apt-get install -y fontconfig ttf-mscorefonts-installer xfonts-utils
+RUN apk update && apk add --no-cache fontconfig ttf-dejavu freetype
 
 # 刷新字体缓存
 RUN fc-cache -fv
