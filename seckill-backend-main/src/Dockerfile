@@ -9,8 +9,14 @@ COPY target/seckill-backend-0.0.1-SNAPSHOT.jar app.jar
 
 COPY src/main/resources/application.yml /app/application.yml
 
+# 安装字体和 fontconfig
+RUN apt-get update && apt-get install -y fontconfig ttf-mscorefonts-installer xfonts-utils
+
+# 刷新字体缓存
+RUN fc-cache -fv
+
 # 暴露应用端口（修改为你的 Spring Boot 应用端口）
 EXPOSE 28080
 
-# 设置容器启动时的运行命令，使用传入的环境变量
-ENTRYPOINT ["java", "-Dspring.rabbitmq.host=rabbitmq", "-Dspring.redis.host=redis", "-Dspring.redis.port=6379", "-jar", "app.jar"]
+# 启动应用时，确保使用无头模式
+ENTRYPOINT ["java", "-Djava.awt.headless=true", "-jar", "/app/app.jar"]
