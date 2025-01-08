@@ -85,11 +85,11 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container-app:3306/personal_seckill?serverTimezone=UTC&characterEncoding=utf8
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: rootpassword
-      RABBITMQ_HOST: rabbitmq-container
+      RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
-      REDIS_HOST: redis-container
+      REDIS_HOST: redis
       REDIS_PORT: 6379
     ports:
       - "28080:28080"
@@ -107,6 +107,11 @@ services:
     image: redis
     container_name: redis-container
     privileged: true  # 启用扩展权限
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     networks:
       - my_network
     ports:

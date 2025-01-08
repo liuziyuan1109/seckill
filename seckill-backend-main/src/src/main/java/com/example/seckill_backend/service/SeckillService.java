@@ -7,6 +7,8 @@ import com.example.seckill_backend.repository.OrderRepository;
 import com.example.seckill_backend.repository.ProductRepository;
 import com.example.seckill_backend.repository.SeckillProductRepository;
 import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Subquery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -155,9 +157,17 @@ public class SeckillService {
         Specification<SeckillProduct> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            // 商品名称关键字查询
+            // 子查询：从商品表中匹配商品名
             if (keyword != null && !keyword.isEmpty()) {
-                predicates.add(cb.like(root.get("goodsId").as(String.class), "%" + keyword + "%"));
+                Subquery<Long> subquery = query.subquery(Long.class);
+                Root<Product> productRoot = subquery.from(Product.class);
+                subquery.select(productRoot.get("id"));
+
+                Predicate productNamePredicate = cb.like(productRoot.get("name"), "%" + keyword + "%");
+                subquery.where(productNamePredicate);
+
+                // 在秒杀商品表中匹配商品ID
+                predicates.add(cb.in(root.get("goodsId")).value(subquery));
             }
             // 秒杀价格范围查询
             if (priceMin != null) {
