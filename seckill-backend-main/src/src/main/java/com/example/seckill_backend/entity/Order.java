@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@RedisHash("orders")
 @Table(name = "t_order")
 public class Order {
     @Id

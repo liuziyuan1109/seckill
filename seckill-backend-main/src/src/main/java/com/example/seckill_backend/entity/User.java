@@ -8,7 +8,6 @@ import java.util.Date;
 
 @Data
 @Entity
-@RedisHash("users")
 @Table(name = "t_user")
 public class User {
 

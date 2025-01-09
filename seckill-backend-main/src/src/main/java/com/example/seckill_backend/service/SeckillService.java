@@ -10,6 +10,8 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Subquery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -106,6 +108,7 @@ public class SeckillService {
 
     // 秒杀逻辑（包括扣减两个表的库存）
     @Transactional
+    @CacheEvict(value = {"seckillProducts", "products"}, key = "#seckillProductId", beforeInvocation = true)
     public void processSeckillOrder(Long userId, Long productId, Long seckillProductId) {
         if (checkIfUserSeckilled(userId, seckillProductId)) {
             throw new RuntimeException("您已参与过秒杀");
@@ -151,6 +154,8 @@ public class SeckillService {
     /**
      * 分页查询秒杀商品列表，并附加商品名称、原价和图片信息
      */
+    @Cacheable(value = "seckillProductPages",
+            key = "'page:' + #page + ':size:' + #size + ':keyword:' + #keyword + ':priceMin:' + #priceMin + ':priceMax:' + #priceMax + ':startDate:' + #startDate + ':endDate:' + #endDate")
     public Page<SeckillProduct> findSeckillProducts(int page, int size, String keyword, BigDecimal priceMin, BigDecimal priceMax, LocalDateTime startDate, LocalDateTime endDate) {
         Pageable pageable = PageRequest.of(page - 1, size);
 
@@ -206,6 +211,7 @@ public class SeckillService {
     /**
      * 根据 ID 查询秒杀商品，并附加商品名称、原价和图片信息
      */
+    @Cacheable(value = "seckillProducts", key = "#id")
     public SeckillProduct findById(Long id) {
         SeckillProduct seckillProduct = seckillProductRepository.findById(id).orElse(null);
         if (seckillProduct != null) {

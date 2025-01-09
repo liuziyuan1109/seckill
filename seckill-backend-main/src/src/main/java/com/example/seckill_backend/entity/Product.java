@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
-@RedisHash("products")
 @Table(name = "t_goods")
 public class Product {
 

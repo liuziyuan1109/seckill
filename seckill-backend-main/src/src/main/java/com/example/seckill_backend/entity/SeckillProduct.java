@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@RedisHash("seckill_products")
 @Table(name = "t_seckill_goods") // 表名对应数据库中的表
 public class SeckillProduct {
 
