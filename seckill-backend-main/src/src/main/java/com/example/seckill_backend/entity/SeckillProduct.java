@@ -2,12 +2,14 @@ package com.example.seckill_backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
+@RedisHash("seckill_products")
 @Table(name = "t_seckill_goods") // 表名对应数据库中的表
 public class SeckillProduct {
 

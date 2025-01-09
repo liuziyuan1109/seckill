@@ -2,12 +2,14 @@ package com.example.seckill_backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
+@RedisHash("orders")
 @Table(name = "t_order")
 public class Order {
     @Id
