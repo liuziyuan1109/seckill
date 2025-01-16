@@ -24,8 +24,7 @@
           <td>{{ order.createDate }}</td>
           <td>{{ order.payDate || '未支付' }}</td>
           <td>
-            <el-button v-if="order.status === 0" type="danger" size="small"
-              @click="confirmCancelOrder(order.id)">
+            <el-button v-if="order.status === 0" type="danger" size="small" @click="confirmCancelOrder(order.id)">
               取消订单
             </el-button>
           </td>
@@ -42,6 +41,7 @@
 
 <script>
 import axios from "axios";
+import dayjs from "dayjs";
 
 const API_BASE_URL = process.env.VUE_APP_API_BASE_URL; // 后端服务地址
 
@@ -102,7 +102,13 @@ export default {
           },
         })
         .then((response) => {
-          this.orders = response.content;
+          this.orders = response.content.map(order => ({
+            ...order,
+            createDate: dayjs(order.createDate).add(8, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+            payDate: order.payDate
+              ? dayjs(order.payDate).add(8, 'hour').format('YYYY-MM-DD HH:mm:ss')
+              : null
+          }));
           this.totalPages = response.totalPages;
           this.currentPage = page;
         })
