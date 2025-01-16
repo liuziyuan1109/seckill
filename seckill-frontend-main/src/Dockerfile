@@ -12,7 +12,7 @@ RUN rm -rf ./*
 # 将 Vue.js 打包后的文件复制到容器中
 COPY dist /usr/share/nginx/html
 
-# 复制自定义的 nginx 配置文件（可选，如果需要自定义 nginx 配置）
+# 复制自定义的 nginx 配置文件
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # 暴露端口 80
